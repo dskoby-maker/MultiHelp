@@ -1,7 +1,9 @@
 import re, json, base64, io, sys
 from PIL import Image, ImageDraw, ImageFont
-src = open('/home/claude/multihelp-site/index.html', encoding='utf-8').read()
-out = '/home/claude/multihelp-repo'
+import os
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+src = open(os.path.join(ROOT, 'dev', 'src', 'site.html'), encoding='utf-8').read()
+out = ROOT
 style = re.search(r'<style>(.*?)</style>', src, re.S).group(1)
 scripts = re.findall(r'<script>(.*?)</script>', src, re.S)
 cfg, main = scripts[0], scripts[1]
