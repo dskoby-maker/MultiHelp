@@ -9,6 +9,7 @@
  *  4. Фото и видео: находит файлы на Диске, открывает к ним доступ «всем по ссылке»
  *     и записывает постоянные ссылки (ссылки Тильды работают только 10 раз).
  *  5. Присылает вам письмо о каждой новой анкете.
+ *  Удалённая из «Анкеты» строка обратно не появится (помощник помнит, что уже переносил).
  *
  * Установка: Расширения → Apps Script → вставить этот код → Сохранить →
  * выбрать функцию «setup» → Выполнить → разрешить доступ. Всё.
@@ -42,6 +43,9 @@ function syncTilda() {
     const known = new Set(lastRow > 1
       ? target.getRange(2, col('id') + 1, lastRow - 1, 1).getValues().map(r => String(r[0])).filter(String)
       : []);
+    // анкеты, которые уже переносили раньше: если вы удалили строку — она не вернётся
+    const props = PropertiesService.getScriptProperties();
+    Object.keys(props.getProperties()).forEach(k => { if (k.indexOf('seen_') === 0) known.add(k.slice(5)); });
 
     const added = [];
     const folders = DriveApp.getFoldersByName(TILDA_FOLDER);
@@ -63,6 +67,7 @@ function syncTilda() {
             const id = 't' + md5(r.join('|')).slice(0, 10);
             if (known.has(id)) return;
             known.add(id);
+            props.setProperty('seen_' + id, '1');
 
             const out = tHead.map(() => '');
             head.forEach((h, i) => {
