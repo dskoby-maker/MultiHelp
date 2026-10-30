@@ -794,7 +794,13 @@ window.MULTIHELP = {
     if (!rows.length) return [];
     const head = rows[0].map(h => h.toLowerCase().trim());
     const idx = {};
-    head.forEach((h, i) => { if (h === 'id') { idx.id = i; return; } const f = FIELDS.find(([k, kw]) => idx[k] === undefined && h.includes(kw)); if (f) idx[f[0]] = i; });
+    // 1) exact Tilda variable names (table «MultiHelp — база мастеров»), 2) keywords for older tables
+    const EXACT = {id:'id', name:'name', profession:'role', category:'cat', city:'city', area:'area', languages:'langs', about:'about',
+      services:'svc', price_from:'from', experience:'years', urgent:'urgent', avatar:'ava', photos:'photos', videos:'videos',
+      video_links:'vlinks', social:'social', whatsapp:'wa', phone:'phone', show:'show', available_today:'today', rating:'rating', reviews_count:'reviews'};
+    const used = new Set();
+    head.forEach((h, i) => { const k = EXACT[h]; if (k && idx[k] === undefined) { idx[k] = i; used.add(i); } });
+    head.forEach((h, i) => { if (used.has(i) || h === 'lang' || h === 'consent') return; const f = FIELDS.find(([k, kw]) => idx[k] === undefined && h.includes(kw)); if (f) idx[f[0]] = i; });
     const get = (r, k) => idx[k] === undefined ? '' : (r[idx[k]] || '').trim();
     const out = [];
     rows.slice(1).forEach(r => {
