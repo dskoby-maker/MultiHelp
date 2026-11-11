@@ -573,6 +573,15 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
 
     const nPh = p.media.filter(m => m.type === 'photo').length, nV = p.media.length - nPh;
     const long = p.about.length > 160;
+    const reportLabels = {
+      es: ['Denunciar anuncio', 'Aviso sobre un anuncio', 'Motivo del aviso:'],
+      ru: ['Пожаловаться на объявление', 'Жалоба на объявление', 'Причина жалобы:'],
+      en: ['Report listing', 'Listing report', 'Reason for reporting:']
+    };
+    const [reportLabel, reportSubject, reportPrompt] = reportLabels[lang] || reportLabels.es;
+    const listingUrl = new URL('/#m=' + encodeURIComponent(p.id), 'https://multihelp.es');
+    const reportHref = 'mailto:multihelp.es@gmail.com?subject=' + encodeURIComponent(reportSubject)
+      + '&body=' + encodeURIComponent(listingUrl.href + '\r\n\r\n' + reportPrompt + '\r\n');
     let li = -1;
     $('#dBody').innerHTML = `
       ${p.rating ? `<div class="stats"><div><b>${ICON.star(16)}${rate(p)}</b><span>${plural('reviews_n', p.reviews)}</span></div><div><b>${p.years || '—'}</b><span>${t('years_exp')}</span></div></div>`
@@ -585,6 +594,7 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
         ${p.urgent ? `<div>${ICON.bolt}<span>${t('urgent_full')}</span></div>` : ''}
         ${mode === 'live' && !p.selfPublished ? `<div>${ICON.shield}<span>${t('verified')}</span></div>` : ''}
       </div>
+      ${p.selfPublished ? `<p><a href="${esc(reportHref)}">${esc(reportLabel)}</a></p>` : ''}
       ${p.about ? `<p class="about ${long ? 'clamp' : ''}" id="about">${esc(p.about)}</p>${long ? `<button class="more" id="more">${t('read_more')}</button>` : ''}` : ''}
       ${p.media.length ? `
         <div class="h3"><b>${t('works')}</b><span>${nPh ? plural('photos_n', nPh) : ''}${nPh && nV ? ' · ' : ''}${nV ? plural('videos_n', nV) : ''}</span></div>
