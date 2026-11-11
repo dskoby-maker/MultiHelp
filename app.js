@@ -583,7 +583,7 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
         ${p.langs ? `<div>${ICON.lang}<span>${esc(p.langs)}</span></div>` : ''}
         ${!p.rating && p.years ? `<div>${ICON.clock}<span>${t('exp', {y:yearsTxt(p.years)})}</span></div>` : ''}
         ${p.urgent ? `<div>${ICON.bolt}<span>${t('urgent_full')}</span></div>` : ''}
-        ${mode === 'live' ? `<div>${ICON.shield}<span>${t('verified')}</span></div>` : ''}
+        ${mode === 'live' && !p.selfPublished ? `<div>${ICON.shield}<span>${t('verified')}</span></div>` : ''}
       </div>
       ${p.about ? `<p class="about ${long ? 'clamp' : ''}" id="about">${esc(p.about)}</p>${long ? `<button class="more" id="more">${t('read_more')}</button>` : ''}` : ''}
       ${p.media.length ? `
@@ -760,7 +760,52 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
     const h = /^#m=(.+)$/.exec(location.hash);
     if (h && !openPro) openDetail(decodeURIComponent(h[1]), true);
   }
+  async function loadPublishedListings(){
+    const endpoint = 'https://htljzcwgtsbfgxegbwiu.supabase.co/rest/v1/rpc/mh_public_listings';
+    const key = 'sb_publishable_7Us6b2eO6RftaqTtVrUFGQ_YrUm-vDa';
+    const listings = [];
+    for (let offset = 0; ; offset += 100) {
+      const response = await fetch(endpoint + '?p_offset=' + offset, {
+        cache: 'no-store',
+        headers: { apikey: key },
+        signal: AbortSignal.timeout(8000)
+      });
+      if (!response.ok) throw new Error('Listings: HTTP ' + response.status);
+      const page = await response.json();
+      if (!Array.isArray(page)) throw new Error('Invalid listings response');
+      listings.push(...page);
+      if (page.length < 100) break;
+    }
+
+    const categories = { photo: 'video', education: 'edu' };
+    const seen = new Set();
+    return listings.filter(item => {
+      if (seen.has(item.id)) return false;
+      seen.add(item.id);
+      return true;
+    }).map(item => ({
+      id: 'listing-' + item.id, n: item.title, r: item.title, c: item.city,
+      area: item.city, cat: categories[item.category] || item.category,
+      ava: null, today: false, urgent: false, media: [], rating: null,
+      reviews: 0, years: null, langs: '', from: Number(item.price) || 0,
+      about: item.description, svc: [], social: [], rev: [],
+      wa: item.whatsapp, phone: '', selfPublished: true
+    }));
+  }
+
   async function load(){
+    if (!CFG.SHEET_CSV_URL) { setMasters(DEMO, 'demo'); return; }
+    const published = loadPublishedListings().catch(() => null);
+    await loadSheet();
+    const listings = await published;
+    if (listings === null) {
+      toast(t('load_err'));
+      return;
+    }
+    if (listings.length) setMasters([...listings, ...MASTERS], 'live');
+  }
+
+  async function loadSheet(){
     if (!CFG.SHEET_CSV_URL) { setMasters(DEMO, 'demo'); return; }
     const cached = LS.get('mh_cache', null);
     if (cached && cached.csv) { try { setMasters(rowsToMasters(parseCSV(cached.csv)), 'live'); } catch(e){} }
