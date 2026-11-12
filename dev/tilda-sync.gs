@@ -45,9 +45,16 @@ function syncTilda() {
       : []);
     // анкеты, которые уже переносили раньше: если вы удалили строку — она не вернётся
     const props = PropertiesService.getScriptProperties();
-    Object.keys(props.getProperties()).forEach(k => { if (k.indexOf('seen_') === 0) known.add(k.slice(5)); });
+    const saved = props.getProperties();
+    // анкеты, перенесённые ещё старой версией помощника (до «памяти»), запоминаем сейчас,
+    // пока их строки ещё есть в «Анкеты» — тогда после удаления они тоже не вернутся
+    const backfill = {};
+    known.forEach(id => { if (!saved['seen_' + id]) backfill['seen_' + id] = '1'; });
+    if (Object.keys(backfill).length) props.setProperties(backfill);
+    Object.keys(saved).forEach(k => { if (k.indexOf('seen_') === 0) known.add(k.slice(5)); });
 
     const added = [];
+    const failed = [];
     const folders = DriveApp.getFoldersByName(TILDA_FOLDER);
     while (folders.hasNext()) {
       const files = folders.next().getFilesByType(MimeType.GOOGLE_SHEETS);
@@ -67,20 +74,26 @@ function syncTilda() {
             const id = 't' + md5(r.join('|')).slice(0, 10);
             if (known.has(id)) return;
             known.add(id);
-            props.setProperty('seen_' + id, '1');
 
-            const out = tHead.map(() => '');
-            head.forEach((h, i) => {
-              const j = col(h);
-              if (j < 0 || ['show', 'available_today', 'rating', 'reviews_count', 'id', 'submitted'].indexOf(h) >= 0) return;
-              let v = String(r[i]).trim();
-              if (FILE_FIELDS.indexOf(h) >= 0) v = fixFileLinks(v);
-              out[j] = v;
-            });
-            out[col('id')] = id;
-            if (col('submitted') >= 0) out[col('submitted')] = timeCol >= 0 && r[timeCol] ? r[timeCol] : new Date();
-            target.appendRow(out);
-            added.push(out);
+            try {
+              const out = tHead.map(() => '');
+              head.forEach((h, i) => {
+                const j = col(h);
+                if (j < 0 || ['show', 'available_today', 'rating', 'reviews_count', 'id', 'submitted'].indexOf(h) >= 0) return;
+                let v = String(r[i]).trim();
+                if (FILE_FIELDS.indexOf(h) >= 0) v = fixFileLinks(v);
+                out[j] = v;
+              });
+              out[col('id')] = id;
+              if (col('submitted') >= 0) out[col('submitted')] = timeCol >= 0 && r[timeCol] ? r[timeCol] : new Date();
+              target.appendRow(out);
+              // запоминаем только ПОСЛЕ успешной записи строки: если запись сорвалась,
+              // анкета не потеряется и перенесётся при следующем запуске
+              props.setProperty('seen_' + id, '1');
+              added.push(out);
+            } catch (e) {
+              failed.push(get('name') + ' — ' + get('profession') + ': ' + e.message);
+            }
           });
         });
       }
@@ -92,6 +105,9 @@ function syncTilda() {
         'MultiHelp: новых анкет — ' + added.length,
         'Новые анкеты мастеров:\n\n' + lines.join('\n') +
         '\n\nПроверьте их и поставьте галочку в столбце show, чтобы мастер появился на сайте:\n' + ss.getUrl());
+    }
+    if (failed.length) {
+      console.error('Не удалось перенести анкеты (повтор через 5 минут):\n' + failed.join('\n'));
     }
   } finally {
     lock.releaseLock();
