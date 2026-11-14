@@ -184,3 +184,9 @@ begin
   begin alter publication supabase_realtime add table public.messages; exception when others then null; end;
   begin alter publication supabase_realtime add table public.chats; exception when others then null; end;
 end $$;
+
+-- ---------- Telegram в объявлении (все контакты необязательные: можно общаться только в чате) ----------
+alter table public.listings add column if not exists telegram text not null default '';
+do $$ begin
+  alter table public.listings add constraint listings_telegram_len check (char_length(telegram) <= 80);
+exception when others then null; end $$;
