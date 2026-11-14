@@ -3,8 +3,8 @@
  *
  * Что делает (сам, каждые 5 минут):
  *  1. Находит на Google Диске папку «Tilda Leads» (туда Тильда пишет заявки с форм).
- *  2. Берёт оттуда новые анкеты мастеров (только те, где есть поля lang и profession —
- *     заявки с других сайтов не трогает).
+ *  2. Берёт оттуда новые анкеты мастеров (только те, где есть поля name и profession —
+ *     заявки с других сайтов не трогает). Язык анкеты узнаёт по адресу страницы формы.
  *  3. Копирует их во вкладку «Анкеты» по названиям столбцов.
  *  4. Фото и видео: находит файлы на Диске, открывает к ним доступ «всем по ссылке»
  *     и записывает постоянные ссылки (ссылки Тильды работают только 10 раз).
@@ -69,13 +69,16 @@ function syncTilda() {
           const data = sh.getDataRange().getValues();
           if (data.length < 2) return;
           const head = data[0].map(h => String(h).trim().toLowerCase());
-          if (head.indexOf('lang') < 0 || head.indexOf('profession') < 0) return; // не наша форма
+          // наша форма: есть name и profession, и это заявка Тильды (requestid/formid) или есть lang
+          const isTilda = head.indexOf('requestid') >= 0 || head.indexOf('formid') >= 0;
+          if (head.indexOf('name') < 0 || head.indexOf('profession') < 0 || (!isTilda && head.indexOf('lang') < 0)) return;
           const timeCol = head.findIndex(h => /date|time|sent|fecha|дата|время/.test(h));
           data.slice(1).forEach(r => {
             if (!r.some(v => String(v).trim())) return;
             const get = k => { const i = head.indexOf(k); return i < 0 ? '' : String(r[i]).trim(); };
             if (!get('name') || !get('profession')) return;
-            const id = 't' + md5(r.join('|')).slice(0, 10);
+            // номер заявки Тильды не меняется, поэтому по нему анкета узнаётся надёжнее всего
+            const id = 't' + md5(get('requestid') || r.join('|')).slice(0, 10);
             if (known.has(id)) return;
             known.add(id);
 
@@ -89,6 +92,11 @@ function syncTilda() {
                 out[j] = v;
               });
               out[col('id')] = id;
+              // язык: из поля lang, а если его нет — по адресу страницы анкеты (anketa-ru / anketa-en / anketa)
+              if (col('lang') >= 0 && !out[col('lang')]) {
+                const ref = get('referer').toLowerCase();
+                out[col('lang')] = /anketa-ru/.test(ref) ? 'ru' : /anketa-en/.test(ref) ? 'en' : 'es';
+              }
               if (col('submitted') >= 0) out[col('submitted')] = timeCol >= 0 && r[timeCol] ? r[timeCol] : new Date();
               ['show', 'available_today'].forEach(k => { if (col(k) >= 0) out[col(k)] = false; });
               if (nextRow > target.getMaxRows()) target.insertRowsAfter(target.getMaxRows(), 1);
