@@ -43,6 +43,8 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
 
 (() => {
   const CFG = window.MULTIHELP || {};
+  // объявление из ссылки (?m=id или #m=id) — запоминаем сразу, пока страница (например, Тильда) не поменяла адрес
+  let startId = (() => { try { const h = /^#m=(.+)$/.exec(location.hash); if (h) return decodeURIComponent(h[1]); return new URLSearchParams(location.search).get('m'); } catch(e){ return null; } })();
   const $ = s => document.querySelector(s), $$ = s => document.querySelectorAll(s);
   const U = (id, w=700) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -689,7 +691,8 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
     $$('#gTrack video').forEach(v => v.pause());
     openPro = null;
     document.title = t('title');
-    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+    const sp = new URLSearchParams(location.search); sp.delete('m'); const qs = sp.toString();
+    if (location.hash || location.search !== (qs ? '?' + qs : '')) history.replaceState(null, '', location.pathname + (qs ? '?' + qs : ''));
   }
   $('#back').onclick = closeDetail;
   dimmer.onclick = closeDetail;
@@ -793,7 +796,7 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
     if (el.closest('#callNum')) { $('#callBg').classList.remove('on'); return; }
     if (el.closest('#waBtn') && openPro) return wa(openPro);
     if (el.closest('#share') && openPro) {
-      const url = location.origin + location.pathname + '#m=' + encodeURIComponent(openPro.id);
+      const url = location.origin + location.pathname + '?m=' + encodeURIComponent(openPro.id);
       const data = {title:'MultiHelp — ' + openPro.n, text: openPro.n + ', ' + openPro.r.toLowerCase() + ' · ' + openPro.c, url};
       if (navigator.share) navigator.share(data).catch(() => {});
       else { try { navigator.clipboard.writeText(url); toast(t('link_copied')); } catch(err) { toast(url); } }
@@ -958,7 +961,7 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
 
   const shareBase = () => String(CFG.SITE_URL || (location.origin + location.pathname)).split('#')[0];
   function shareLink(x){
-    const url = shareBase() + '#m=' + encodeURIComponent(x.id);
+    const url = shareBase() + '?m=' + encodeURIComponent(x.id);
     const data = {title:'MultiHelp — ' + x.name, text:x.name + ', ' + String(x.profession).toLowerCase() + ' · ' + x.city, url};
     if (navigator.share) { navigator.share(data).catch(() => {}); return; }
     try { navigator.clipboard.writeText(url).then(() => toast(t('link_copied')), () => toast(url)); } catch(e){ toast(url); }
@@ -1163,7 +1166,8 @@ root.innerHTML = "<div class=\"stage\">\n  <div class=\"side\">\n    <span class
     if (!cities().includes(city)) city = 'ALL';
     renderAll();
     const h = /^#m=(.+)$/.exec(location.hash);
-    if (h && !openPro) openDetail(decodeURIComponent(h[1]), true);
+    const id = h ? decodeURIComponent(h[1]) : startId;
+    if (id && !openPro && byId(id)) { startId = null; openDetail(id, h ? true : false); }
   }
   async function load(){
     if (!CFG.SHEET_CSV_URL && !HAS_SB) { setMasters(DEMO, 'demo'); return; }
