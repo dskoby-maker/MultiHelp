@@ -1,5 +1,5 @@
 // MultiHelp — «почтальон»: когда в чате новое сообщение, отправляет уведомление получателю на телефон.
-// Установка: Supabase → Edge Functions → Deploy a new function → Via Editor → имя notify → вставить этот код → Deploy.
+// Установка: Supabase → Edge Functions → Deploy a new function → Via Editor (в проекте MultiHelp она называется clever-action) → вставить этот код → Deploy.
 // Затем в настройках функции выключить «Verify JWT» (Enforce JWT verification).
 import webpush from "npm:web-push@3.6.7";
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
