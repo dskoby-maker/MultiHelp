@@ -303,14 +303,14 @@ window.MULTIHELP = {
   .lb-cap{position:absolute;left:0;right:0;bottom:calc(20px + var(--safe-b));text-align:center;color:#aaa;font-size:12px;pointer-events:none}
 
   /* ---------- tabbar ---------- */
-  .tabbar{position:absolute;left:0;right:0;bottom:0;z-index:10;height:calc(64px + var(--safe-b));padding-bottom:var(--safe-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--hair);display:grid;grid-template-columns:repeat(4,1fr)}
+  .tabbar{position:absolute;left:0;right:0;bottom:0;z-index:10;height:calc(64px + var(--safe-b));padding-bottom:var(--safe-b);background:var(--glass);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--hair);display:grid;grid-template-columns:repeat(5,1fr)}
   .tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:10px;letter-spacing:.06em;color:var(--muted);transition:color .3s;position:relative}
   .tab.on{color:var(--ink)}
   .tab svg{transition:transform .35s var(--ease)}
   .tab.on svg{transform:translateY(-2px)}
   .tab .cnt{position:absolute;top:8px;left:calc(50% + 6px);min-width:16px;height:16px;border-radius:999px;background:var(--ink);color:var(--bg);font-size:10px;display:none;align-items:center;justify-content:center;padding:0 4px;letter-spacing:0}
   .tab .cnt.show{display:flex}
-  .ind{position:absolute;top:-1px;left:0;height:2px;width:25%;background:var(--ink);transition:transform .45s var(--ease)}
+  .ind{position:absolute;top:-1px;left:0;height:2px;width:20%;background:var(--ink);transition:transform .45s var(--ease)}
 
   /* ---------- sheets / toast / splash ---------- */
   .sheet-bg{position:absolute;inset:0;z-index:50;background:rgba(0,0,0,0);pointer-events:none;transition:background .35s}
@@ -377,6 +377,38 @@ window.MULTIHELP = {
   .ph-grid .x{position:absolute;top:6px;right:6px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;font-size:18px;line-height:30px;text-align:center}
   .ph-load{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:22px}
   .ph-add{display:flex;align-items:center;justify-content:center;border:1px dashed var(--muted);color:var(--muted);font-size:14px;cursor:pointer}
+
+  /* ---------- чат ---------- */
+  .d-cta .round.wa{border-color:var(--hair)}
+  .ch-row{width:100%;display:flex;gap:12px;align-items:center;padding:12px 18px;text-align:left;border-bottom:1px solid var(--hair)}
+  .ch-row .av{width:52px;height:52px;border-radius:50%;overflow:hidden;background:var(--soft);flex:0 0 auto;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:17px}
+  .ch-row .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .ch-row .tx b{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ch-row .tx span{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ch-row.un .tx span{color:var(--ink);font-weight:500}
+  .ch-row .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:11px;color:var(--muted);flex:0 0 auto}
+  .ch-row .meta i{width:10px;height:10px;border-radius:50%;background:var(--ok)}
+  .chat .ed-head .ttl2{flex:1;min-width:0;display:flex;flex-direction:column;text-align:left}
+  .chat .ed-head .ttl2 b{font-weight:500;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chat .ed-head .ttl2 small{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .ch-ico{width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:var(--muted);flex:0 0 auto}
+  .msgs{flex:1;overflow-y:auto;padding:14px 12px;display:flex;flex-direction:column;gap:6px;background:var(--soft);scrollbar-width:none}
+  .msg{max-width:80%;padding:8px 12px 6px;border-radius:18px;font-size:15px;line-height:1.4;display:flex;flex-direction:column;gap:4px;word-wrap:break-word;overflow-wrap:anywhere}
+  .msg.l{align-self:flex-start;background:var(--bg);border-bottom-left-radius:6px}
+  .msg.r{align-self:flex-end;background:var(--ink);color:var(--bg);border-bottom-right-radius:6px}
+  .msg .mb{white-space:pre-wrap}
+  .msg .mt{font-size:10px;opacity:.55;align-self:flex-end}
+  .msg .mph{display:block;width:220px;max-width:100%;border-radius:12px;overflow:hidden;margin:2px -4px 0}
+  .msg .mph img{height:auto;max-height:280px}
+  .ch-day{align-self:center;font-size:11px;color:var(--muted);padding:8px 0 2px}
+  .ch-hint{align-self:center;max-width:300px;text-align:center;font-size:13px;color:var(--muted);line-height:1.5;padding:30px 10px}
+  .ch-bar{display:flex;align-items:flex-end;gap:8px;padding:8px 10px calc(8px + var(--safe-b));border-top:1px solid var(--hair);background:var(--bg)}
+  .ch-bar textarea{flex:1;min-width:0;resize:none;border:1px solid var(--hair);border-radius:20px;background:var(--soft);padding:10px 14px;font:inherit;font-size:16px;line-height:1.35;color:var(--ink);outline:0;max-height:120px}
+  .ch-bar .ch-ico{height:44px;cursor:pointer}
+  .ch-send{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--bg);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
+  .safe-list{margin:0 0 18px;padding:0 0 0 20px;font-size:14px;line-height:1.6}
+  .cab-msgs{margin:10px 18px 0;width:calc(100% - 36px);display:flex;justify-content:space-between;align-items:center;min-height:52px;padding:0 18px;border:1px solid var(--hair);border-radius:16px;font-size:15px}
+  .cab-msgs b{background:var(--ok);color:#fff;border-radius:999px;font-size:12px;padding:2px 8px;font-weight:500}
 </style>
 </head>
 <body>
@@ -453,6 +485,11 @@ window.MULTIHELP = {
       </section>
 
       <!-- FOR PROS -->
+      <section class="screen" data-tab="chats" id="s-chats">
+        <div class="topbar"><div class="brand" data-i18n="chats">Mensajes</div></div>
+        <div id="chatList"></div>
+      </section>
+
       <section class="screen" data-tab="me" id="s-me">
         <div class="topbar"><div class="brand" data-i18n="for_pros">Для специалистов</div></div>
         <div id="formBox">
@@ -502,6 +539,8 @@ window.MULTIHELP = {
       </div>
       <div class="d-cta">
         <button class="round press" id="callBtn" data-i18n-aria="call" aria-label="Позвонить"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg></button>
+        <button class="round wa press" id="waRound" hidden aria-label="WhatsApp"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1112 20.5a8.4 8.4 0 01-4.3-1.2z"/><path d="M9 9.5c0 2.5 2 5 5 5.5l1-1.3-1.6-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.6z"/></svg></button>
+        <button class="btn dark press" id="chatBtn" hidden><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span data-i18n="chat_btn"></span></button>
         <button class="btn dark press" id="waBtn">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 20.5l1.3-4.2A8.5 8.5 0 1112 20.5a8.4 8.4 0 01-4.3-1.2z"/><path d="M9 9.5c0 2.5 2 5 5 5.5l1-1.3-1.6-1-.9.7c-.9-.4-1.6-1.1-2-2l.7-.9-1-1.6z"/></svg>
           <span data-i18n="write_wa">Написать в WhatsApp</span>
@@ -522,6 +561,7 @@ window.MULTIHELP = {
       <button class="tab on" data-tab-go="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg><span data-i18n="home">Главная</span></button>
       <button class="tab" data-tab-go="search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span data-i18n="search">Поиск</span></button>
       <button class="tab" data-tab-go="fav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/></svg><span data-i18n="favs">Избранное</span><span class="cnt" id="favCnt">0</span></button>
+      <button class="tab" data-tab-go="chats"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg><span data-i18n="chats">Mensajes</span><span class="cnt" id="chatCnt">0</span></button>
       <button class="tab" data-tab-go="me"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span data-i18n="me_tab">Я мастер</span></button>
     </nav>
 
@@ -581,6 +621,42 @@ window.MULTIHELP = {
       <div class="ed-body" id="edBody"></div>
     </section>
 
+    <!-- CHAT -->
+    <section class="detail ed chat" id="chatV" aria-hidden="true">
+      <div class="ed-head">
+        <button class="ed-back press" id="chatBack" data-i18n-aria="back" aria-label="Назад"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="ttl2"><b id="chatTitle"></b><small id="chatSub"></small></div>
+        <button class="ch-ico press" id="chatOpenPro" data-i18n-aria="chat_profile" aria-label="Профиль"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></button>
+        <button class="ch-ico press" id="chatReport" data-i18n-aria="report_h" aria-label="Пожаловаться"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4h11l-1.5 4L16 12H5"/></svg></button>
+      </div>
+      <div class="msgs" id="msgs"></div>
+      <div class="ch-bar" id="chatBar">
+        <label class="ch-ico press" data-i18n-aria="chat_photo" aria-label="Фото"><input type="file" accept="image/*" id="msgPh" hidden><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="15" rx="3"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg></label>
+        <textarea id="msgIn" rows="1" maxlength="2000" data-i18n-ph="chat_ph"></textarea>
+        <button class="ch-send press" id="msgSend" data-i18n-aria="send" aria-label="Отправить"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </section>
+
+    <div class="sheet-bg" id="safeBg">
+      <div class="sheet" role="dialog" aria-labelledby="safeH">
+        <div class="grab"></div>
+        <h3 id="safeH"></h3>
+        <p class="auth-p" data-i18n="safe_p"></p>
+        <ul class="safe-list"><li data-i18n="safe_1"></li><li data-i18n="safe_2"></li><li data-i18n="safe_3"></li></ul>
+        <button class="btn dark full press" id="safeChat" data-i18n="safe_chat"></button>
+        <a class="btn line full press" id="safeGo" href="#" style="margin-top:10px"></a>
+      </div>
+    </div>
+
+    <div class="sheet-bg" id="askBg">
+      <div class="sheet" role="dialog" aria-labelledby="askH">
+        <div class="grab"></div>
+        <h3 id="askH" style="font-size:22px"></h3>
+        <label class="fld" style="margin-top:12px"><input id="askIn" maxlength="60"><textarea id="askArea" rows="4" maxlength="1000" hidden></textarea></label>
+        <button class="btn dark full press" id="askOk" data-i18n="ok"></button>
+      </div>
+    </div>
+
     <div class="toast" id="toast"></div>
   </div>
 </div>
@@ -615,6 +691,18 @@ window.MULTIHELP = {
       how:'Cómo funciona', s1b:'Rellena el formulario', s1s:'Fotos y vídeos de tus trabajos, servicios y precios, redes sociales, WhatsApp — unos 10 minutos.',
       s2b:'Revisamos tu perfil', s2s:'Normalmente en 1–2 días. Si hay que corregir algo, te escribimos.',
       s3b:'Recibe clientes', s3s:'Tu página aparecerá en el catálogo. Comparte el enlace en Instagram y WhatsApp.',
+      svc_note_chat:'Pulsa un servicio y se abrirá el chat con un mensaje listo', chats:'Mensajes', chat_btn:'Escribir en el chat', chat_soon:'El chat estará disponible pronto.', chats_login:'Entra para escribir a los profesionales y ver tus conversaciones.',
+      chats_empty:'Aquí aparecerán tus conversaciones con los profesionales.', chat_new:'Conversación nueva', you:'Tú', client:'Cliente',
+      master:'Profesional', chat_removed:'Anuncio eliminado', chat_safe:'Chat protegido por MultiHelp', chat_ph:'Mensaje…',
+      chat_photo:'Enviar foto', send:'Enviar', chat_profile:'Perfil', chat_hint_client:'Describe qué necesitas, dónde y cuándo. Puedes enviar una foto del problema.',
+      chat_hint_master:'Aquí aparecerán los mensajes del cliente.', chat_svc:'Hola, me interesa: «{s}». ¿Cuándo podrías?', own_listing:'Es tu propio anuncio', banned:'Tu cuenta está bloqueada. Escríbenos si es un error.',
+      name_h:'¿Cómo te llamas?', name_ph:'Tu nombre para el profesional', fill_it:'Rellena el campo', ok:'Continuar',
+      report_h:'Denunciar', report_ph:'¿Qué ha pasado? Lo revisaremos.', report_ok:'Gracias. Revisaremos la conversación.', safe_h_wa:'Vas a abrir WhatsApp',
+      safe_h_call:'Vas a llamar al profesional', safe_p:'MultiHelp no ve las conversaciones fuera de la web: si algo sale mal, no podremos ayudarte.', safe_1:'No pagues por adelantado a desconocidos', safe_2:'Acuerda el precio y el plazo antes de empezar',
+      safe_3:'Es más seguro escribir por el chat de MultiHelp', safe_chat:'Escribir en el chat de MultiHelp', safe_go_wa:'Abrir WhatsApp igualmente', safe_go_call:'Llamar igualmente · {n}',
+      reports_h:'Denuncias', reports_none:'No hay denuncias nuevas.', report_from:'De', rep_open:'Ver chat',
+      rep_ban:'Bloquear', rep_done:'Cerrar', ban_q:'¿Bloquear a este usuario? No podrá escribir ni publicar anuncios.', banned_ok:'Usuario bloqueado',
+      msgs_btn:'Mensajes de clientes',
       pub_btn:'Publicar anuncio', have_acc:'¿Ya tienes cuenta? Entrar', c1b:'Entra con tu email o Google', c1s:'Sin contraseñas: te enviamos un código al email.',
       c2b:'Crea tu anuncio', c2s:'Fotos de tus trabajos, servicios y precios, WhatsApp. Puedes tener varios anuncios: por ejemplo, fontanero y electricista.', c3b:'Comparte tu enlace', c3s:'Cada anuncio tiene su propio enlace para Instagram, WhatsApp y publicidad. Edítalo cuando quieras.',
       cab:'Mi cuenta', logout:'Salir', my_listings:'Mis anuncios', new_listing:'+ Nuevo anuncio',
@@ -676,6 +764,18 @@ window.MULTIHELP = {
       how:'Как это работает', s1b:'Заполните анкету', s1s:'Фото работ, видео, услуги и цены, соцсети, WhatsApp — около 10 минут.',
       s2b:'Мы проверим профиль', s2s:'Обычно за 1–2 дня. Если что-то нужно поправить — напишем.',
       s3b:'Получайте клиентов', s3s:'Ваша страница появится в каталоге. Делитесь ссылкой на неё в Instagram и WhatsApp.',
+      svc_note_chat:'Нажмите на услугу — откроется чат с готовым сообщением', chats:'Сообщения', chat_btn:'Написать в чат', chat_soon:'Чат скоро появится.', chats_login:'Войдите, чтобы писать мастерам и видеть свои переписки.',
+      chats_empty:'Здесь появятся ваши переписки с мастерами.', chat_new:'Новый чат', you:'Вы', client:'Клиент',
+      master:'Мастер', chat_removed:'Объявление удалено', chat_safe:'Переписка под защитой MultiHelp', chat_ph:'Сообщение…',
+      chat_photo:'Отправить фото', send:'Отправить', chat_profile:'Профиль', chat_hint_client:'Опишите, что нужно сделать, где и когда. Можно прислать фото проблемы.',
+      chat_hint_master:'Здесь появятся сообщения клиента.', chat_svc:'Здравствуйте! Интересует: «{s}». Когда сможете?', own_listing:'Это ваше объявление', banned:'Ваш аккаунт заблокирован. Напишите нам, если это ошибка.',
+      name_h:'Как вас зовут?', name_ph:'Имя, которое увидит мастер', fill_it:'Заполните поле', ok:'Продолжить',
+      report_h:'Пожаловаться', report_ph:'Что случилось? Мы проверим.', report_ok:'Спасибо. Мы проверим переписку.', safe_h_wa:'Вы переходите в WhatsApp',
+      safe_h_call:'Вы звоните мастеру', safe_p:'Переписка и звонки вне сайта не видны MultiHelp — если что-то пойдёт не так, мы не сможем помочь разобраться.', safe_1:'Не вносите предоплату незнакомым людям', safe_2:'Договоритесь о цене и сроках до начала работы',
+      safe_3:'Безопаснее писать через чат MultiHelp', safe_chat:'Написать в чат MultiHelp', safe_go_wa:'Всё равно открыть WhatsApp', safe_go_call:'Всё равно позвонить · {n}',
+      reports_h:'Жалобы', reports_none:'Новых жалоб нет.', report_from:'От', rep_open:'Переписка',
+      rep_ban:'Заблокировать', rep_done:'Закрыть', ban_q:'Заблокировать этого пользователя? Он не сможет писать и размещать объявления.', banned_ok:'Пользователь заблокирован',
+      msgs_btn:'Сообщения от клиентов',
       pub_btn:'Разместить объявление', have_acc:'Уже есть кабинет? Войти', c1b:'Войдите по почте или через Google', c1s:'Без паролей: пришлём код на почту.',
       c2b:'Создайте объявление', c2s:'Фото работ, услуги и цены, WhatsApp. Объявлений может быть несколько — например, сантехник и электрик.', c3b:'Делитесь ссылкой', c3s:'У каждого объявления своя ссылка для Instagram, WhatsApp и рекламы. Меняйте объявление когда угодно.',
       cab:'Личный кабинет', logout:'Выйти', my_listings:'Мои объявления', new_listing:'+ Новое объявление',
@@ -737,6 +837,18 @@ window.MULTIHELP = {
       how:'How it works', s1b:'Fill in the form', s1s:'Photos and videos of your work, services and prices, social media, WhatsApp — about 10 minutes.',
       s2b:'We review your profile', s2s:'Usually within 1–2 days. If anything needs fixing, we’ll message you.',
       s3b:'Get clients', s3s:'Your page will appear in the catalogue. Share the link on Instagram and WhatsApp.',
+      svc_note_chat:'Tap a service to open the chat with a ready message', chats:'Messages', chat_btn:'Message in chat', chat_soon:'Chat is coming soon.', chats_login:'Sign in to message professionals and see your conversations.',
+      chats_empty:'Your conversations with professionals will appear here.', chat_new:'New chat', you:'You', client:'Client',
+      master:'Professional', chat_removed:'Listing removed', chat_safe:'Chat protected by MultiHelp', chat_ph:'Message…',
+      chat_photo:'Send photo', send:'Send', chat_profile:'Profile', chat_hint_client:'Describe what you need, where and when. You can send a photo of the problem.',
+      chat_hint_master:'Client messages will appear here.', chat_svc:'Hi! I’m interested in: “{s}”. When could you do it?', own_listing:'This is your own listing', banned:'Your account is blocked. Contact us if this is a mistake.',
+      name_h:'What’s your name?', name_ph:'Name the professional will see', fill_it:'Please fill in the field', ok:'Continue',
+      report_h:'Report', report_ph:'What happened? We’ll look into it.', report_ok:'Thanks. We’ll review the conversation.', safe_h_wa:'You’re opening WhatsApp',
+      safe_h_call:'You’re calling the professional', safe_p:'MultiHelp can’t see conversations outside the site — if something goes wrong, we won’t be able to help.', safe_1:'Don’t pay strangers in advance', safe_2:'Agree on the price and timing before work starts',
+      safe_3:'It’s safer to write via MultiHelp chat', safe_chat:'Message in MultiHelp chat', safe_go_wa:'Open WhatsApp anyway', safe_go_call:'Call anyway · {n}',
+      reports_h:'Reports', reports_none:'No new reports.', report_from:'From', rep_open:'Open chat',
+      rep_ban:'Block', rep_done:'Close', ban_q:'Block this user? They won’t be able to message or post listings.', banned_ok:'User blocked',
+      msgs_btn:'Messages from clients',
       pub_btn:'Post a listing', have_acc:'Already have an account? Sign in', c1b:'Sign in with email or Google', c1s:'No passwords: we email you a code.',
       c2b:'Create your listing', c2s:'Photos of your work, services and prices, WhatsApp. You can have several listings — e.g. plumber and electrician.', c3b:'Share your link', c3s:'Each listing has its own link for Instagram, WhatsApp and ads. Edit it anytime.',
       cab:'My account', logout:'Sign out', my_listings:'My listings', new_listing:'+ New listing',
@@ -1128,7 +1240,7 @@ window.MULTIHELP = {
   const renderAll = () => { renderHome(); renderResults(); renderFavs(); renderCities(); };
 
   /* ---------- tabs ---------- */
-  const order = ['home','search','fav','me'];
+  const order = ['home','search','fav','chats','me'];
   let current = 'home';
   function go(tab){
     if (openPro) closeDetail();
@@ -1140,6 +1252,7 @@ window.MULTIHELP = {
     if (tab === 'fav') renderFavs();
     if (tab === 'search') renderResults();
     if (tab === 'me' && HAS_SB) initAuth();
+    if (tab === 'chats') { renderChats(); if (HAS_SB) initAuth().then(() => { if (user) loadChats(); }); }
   }
 
   /* ---------- contacts ---------- */
@@ -1220,13 +1333,14 @@ window.MULTIHELP = {
       ${p.svc.length ? `
         <div class="h3"><b>${t('services')}</b></div>
         <div class="svc">${p.svc.map(s => `<button class="press" data-svc-wa="${esc(s[0])}"><span>${esc(s[0])}</span><span>${s[1] ? s[1] + ' €' : t('on_request')}</span><span class="go">${ICON.arrow}</span></button>`).join('')}</div>
-        <div class="svc-note">${t('svc_note')}</div>` : ''}
+        <div class="svc-note">${t(chatOk(p) ? 'svc_note_chat' : 'svc_note')}</div>` : ''}
       ${p.rating ? `
         <div class="h3"><b>${t('reviews')}</b></div>
         <div class="rv-sum"><b>${rate(p)}</b><div>${starsRow(p.rating)}<div class="muted" style="font-size:13px;margin-top:4px">${t('reviews_count', {n:p.reviews})}</div></div></div>
         ${p.rev.map(r => `<div class="rv"><div class="top"><b>${esc(r.n)}</b><span class="muted">${esc(r.d)}</span></div>${starsRow(5)}<p>${esc(r.t)}</p><span class="svcn">${esc(r.s)}</span></div>`).join('')}` : ''}
       <button class="report">${t('report')}</button>`;
     dScroll.scrollTop = 0; dHead.classList.remove('solid');
+    setCta(p);
     detail.classList.add('open'); detail.setAttribute('aria-hidden','false');
     dimmer.classList.add('on');
   }
@@ -1323,7 +1437,7 @@ window.MULTIHELP = {
     const pfTab = el.closest('[data-pf]');
     if (pfTab) { $$('[data-pf]').forEach(b => b.classList.toggle('on', b === pfTab)); $$('#pf > *').forEach(b => b.classList.toggle('hide', pfTab.dataset.pf !== 'all' && b.dataset.kind !== pfTab.dataset.pf)); return; }
     const lbBtn = el.closest('[data-lb]'); if (lbBtn) return openLB(+lbBtn.dataset.lb);
-    const sv = el.closest('[data-svc-wa]'); if (sv && openPro) return wa(openPro, sv.dataset.svcWa);
+    const sv = el.closest('[data-svc-wa]'); if (sv && openPro) return chatOk(openPro) ? startChat(openPro.id, t('chat_svc', {s:sv.dataset.svcWa})) : safety('wa', sv.dataset.svcWa);
     if (el.closest('#more')) { $('#about').classList.remove('clamp'); el.closest('#more').remove(); return; }
     const pr = el.closest('[data-pro]'); if (pr) return openDetail(pr.dataset.pro);
     if (el.closest('[data-open-city]')) { renderCities(); $('#sheetBg').classList.add('on'); return; }
@@ -1331,15 +1445,12 @@ window.MULTIHELP = {
     if (el.closest('[data-open-lang]')) { e.preventDefault(); renderLangs(); $('#langBg').classList.add('on'); return; }
     const lg = el.closest('[data-lang]'); if (lg) { setLang(lg.dataset.lang); setTimeout(() => $('#langBg').classList.remove('on'), 180); return; }
     if (el.closest('[data-close-sheet]')) { el.closest('.sheet-bg').classList.remove('on'); return; }
-    if (el.closest('#callBtn') && openPro) {
-      const num = phoneDigits(openPro.phone || openPro.wa);
-      if (!num) { toast(mode === 'demo' ? t('demo_phone') : t('no_phone')); return; }
-      $('#callName').textContent = t('call_x', {n:openPro.n});
-      $('#callNum').setAttribute('href', 'tel:+' + num);
-      $('#callBg').classList.add('on'); return;
-    }
+    if (el.closest('#callBtn') && openPro) return safety('call');
     if (el.closest('#callNum')) { $('#callBg').classList.remove('on'); return; }
-    if (el.closest('#waBtn') && openPro) return wa(openPro);
+    if (el.closest('#waBtn, #waRound') && openPro) return safety('wa');
+    if (el.closest('#chatBtn') && openPro) return startChat(openPro.id);
+    const chr = el.closest('[data-chat]'); if (chr) { const c = chats.find(x => x.id === chr.dataset.chat); if (c) openChatView(c); return; }
+    const rp = el.closest('[data-rep]'); if (rp) { e.preventDefault(); return repAction(rp.dataset.rep, rp.dataset.id, rp.dataset.u); }
     if (el.closest('#share') && openPro) {
       const url = location.origin + location.pathname + '?m=' + encodeURIComponent(openPro.id);
       const data = {title:'MultiHelp — ' + openPro.n, text: openPro.n + ', ' + openPro.r.toLowerCase() + ' · ' + openPro.c, url};
@@ -1351,7 +1462,7 @@ window.MULTIHELP = {
   });
   document.addEventListener('keydown', e => {
     if (e.key === 'Enter' && e.target.matches('.card')) openDetail(e.target.dataset.pro);
-    if (e.key === 'Escape') { if (lb.classList.contains('on')) return closeLB(); if (edEl.classList.contains('open')) return closeEd(); if (openPro) closeDetail(); $$('.sheet-bg').forEach(b => b.classList.remove('on')); }
+    if (e.key === 'Escape') { if (lb.classList.contains('on')) return closeLB(); if (edEl.classList.contains('open')) return closeEd(); if (chatEl.classList.contains('open')) return closeChat(); if (openPro) closeDetail(); $$('.sheet-bg').forEach(b => b.classList.remove('on')); }
   });
   addEventListener('hashchange', () => { const m = /^#m=(.+)$/.exec(location.hash); if (m && (!openPro || openPro.id !== decodeURIComponent(m[1]))) openDetail(decodeURIComponent(m[1]), true); });
 
@@ -1435,10 +1546,11 @@ window.MULTIHELP = {
     u = u || null;
     if ((u && u.id) === (user && user.id)) return;
     user = u; isAdmin = false; myList = []; allList = null;
-    renderCab();
-    if (!user) return;
+    renderCab(); renderChats();
+    if (!user) { chatsOnLogout(); return; }
     $('#authBg').classList.remove('on');
-    if (LS.get('mh_after_login', null)) { LS.set('mh_after_login', null); go('me'); }
+    const pend = chatsOnLogin();
+    if (LS.get('mh_after_login', null)) { LS.set('mh_after_login', null); if (!pend && current !== 'chats') go('me'); }
     try { const r = await sb.rpc('is_admin'); isAdmin = r.data === true; } catch(e){}
     await loadMine();
   }
@@ -1493,6 +1605,7 @@ window.MULTIHELP = {
     }
     let h = `<div class="cab-head"><span class="caps" style="color:var(--block-muted)">${esc(t('cab'))}</span><span class="em">${esc(user.email || '')}</span><button data-cab="logout">${esc(t('logout'))}</button></div>
       <button class="btn dark press cab-new" data-cab="new">${esc(t('new_listing'))}</button>
+      ${chats.some(c => c.master === user.id) ? `<button class="cab-msgs press" data-tab-go="chats"><span>${esc(t('msgs_btn'))}</span>${chats.filter(c => c.master === user.id && isUnread(c)).length ? `<b>${chats.filter(c => c.master === user.id && isUnread(c)).length}</b>` : '<span>→</span>'}</button>` : ''}
       <div class="sec-t"><h2>${esc(t('my_listings'))}</h2></div>`;
     if (mineLoading && !myList.length) h += `<p class="cab-empty">…</p>`;
     else if (!myList.length) h += `<p class="cab-empty">${esc(t('no_listings'))}</p>`;
@@ -1500,6 +1613,7 @@ window.MULTIHELP = {
     if (isAdmin) {
       h += `<div class="sec-t"><h2>${esc(t('admin_h'))}</h2>${allList ? '' : `<button data-cab="admin">${esc(t('see_all'))}</button>`}</div>`;
       if (allList) h += allList.map(x => myItemHTML(x, true)).join('') || `<p class="cab-empty">—</p>`;
+      h += reportsHTML();
     }
     box.innerHTML = h + '<div style="height:24px"></div>';
   }
@@ -1698,6 +1812,253 @@ window.MULTIHELP = {
   $('#edBody').addEventListener('input', e => { edDirty = true; if (e.target.id === 'f_name' && !edAva) renderEdAva(); });
   $('#edBody').addEventListener('click', e => { const d = e.target.closest('[data-ph-del]'); if (d) { e.preventDefault(); edPhotos.splice(+d.dataset.phDel, 1); edDirty = true; renderPhotos(); } });
 
+  /* ---------- чат клиента с мастером ---------- */
+  let chats = [], chatsLoaded = false, openChat = null, chatAdmin = false, msgs = [], rtChan = null, pollT = null, chatsT = null, reports = null;
+  const chatEl = $('#chatV');
+  const myRole = c => c.client === (user && user.id) ? 'client' : 'master';
+  const isUnread = c => !!user && !!c.last_sender && c.last_sender !== user.id && new Date(c.last_at) > new Date(c[myRole(c) + '_read_at']);
+  const listingOf = c => (dbMasters.find(m => m.id === String(c.listing_id)) || null);
+  function chatTitle(c){
+    if (chatAdmin && openChat === c) return c.listing_title || '—';
+    if (myRole(c) === 'client') return c.listing_title || t('chat_removed');
+    return (c.client_name || t('client')) + ' · ' + (String(c.listing_title).split(' · ')[1] || '');
+  }
+  function fmtTime(s){
+    const d = new Date(s), now = new Date();
+    const hm = d.toLocaleTimeString(lang, {hour:'2-digit', minute:'2-digit'});
+    return d.toDateString() === now.toDateString() ? hm : d.toLocaleDateString(lang, {day:'numeric', month:'short'}) + (openChat ? ' ' + hm : '');
+  }
+  function updBadge(){
+    const n = chats.filter(isUnread).length, el = $('#chatCnt');
+    el.textContent = n; el.classList.toggle('show', n > 0);
+  }
+  async function loadChats(){
+    if (!user || !sb) return;
+    const {data, error} = await sb.from('chats').select('*').or(`client.eq.${user.id},master.eq.${user.id}`).order('last_at', {ascending:false}).limit(200);
+    if (!error) { chats = data || []; chatsLoaded = true; }
+    renderChats(); updBadge();
+    if (current === 'me') renderCab();
+  }
+  const loadChatsSoon = () => { clearTimeout(chatsT); chatsT = setTimeout(loadChats, 400); };
+  function renderChats(){
+    const box = $('#chatList'); if (!box) return;
+    if (!HAS_SB) { box.innerHTML = `<div class="empty"><b>${esc(t('chats'))}</b><span>${esc(t('chat_soon'))}</span></div>`; return; }
+    if (!user) {
+      box.innerHTML = `<div class="empty"><b>${esc(t('chats'))}</b><span>${esc(t('chats_login'))}</span><button class="btn dark press" data-cab="login" style="margin-top:8px">${esc(t('enter'))}</button></div>`;
+      return;
+    }
+    if (!chats.length) {
+      box.innerHTML = chatsLoaded ? `<div class="empty"><b>${esc(t('chats'))}</b><span>${esc(t('chats_empty'))}</span><button class="btn dark press" data-tab-go="home" style="margin-top:8px">${esc(t('see_pros'))}</button></div>` : '<p class="cab-empty" style="padding-top:20px">…</p>';
+      return;
+    }
+    box.innerHTML = chats.map(c => {
+      const m = listingOf(c), un = isUnread(c);
+      const pic = myRole(c) === 'client' && m && m.ava ? `<img src="${esc(m.ava)}" alt="">` : esc(initials(myRole(c) === 'client' ? (m ? m.n : String(c.listing_title).split(' · ')[0]) : (c.client_name || '?')));
+      const mine = c.last_sender === user.id;
+      return `<button class="ch-row press${un ? ' un' : ''}" data-chat="${esc(c.id)}"><span class="av">${pic}</span>
+        <span class="tx"><b>${esc(chatTitle(c))}</b><span>${mine ? esc(t('you')) + ': ' : ''}${esc(c.last_text || t('chat_new'))}</span></span>
+        <span class="meta"><span>${esc(fmtTime(c.last_at))}</span>${un ? '<i></i>' : ''}</span></button>`;
+    }).join('');
+  }
+
+  /* --- окно чата --- */
+  function msgHTML(m){
+    const mine = user && m.sender === user.id;
+    const side = chatAdmin ? (m.sender === openChat.client ? 'l' : 'r') : (mine ? 'r' : 'l');
+    return `<div class="msg ${side}" data-mid="${m.id}">${m.photo ? `<a href="${esc(m.photo)}" target="_blank" rel="noopener" class="mph"><img src="${esc(m.photo)}" alt="" loading="lazy"></a>` : ''}${m.body ? `<span class="mb">${esc(m.body)}</span>` : ''}<span class="mt">${esc(new Date(m.created_at).toLocaleTimeString(lang, {hour:'2-digit', minute:'2-digit'}))}</span></div>`;
+  }
+  function renderMsgs(stick){
+    const box = $('#msgs');
+    const atEnd = box.scrollHeight - box.scrollTop - box.clientHeight < 80;
+    let lastDay = '', h = '';
+    if (!msgs.length) h = `<div class="ch-hint">${esc(chatAdmin ? '—' : t(myRole(openChat) === 'client' ? 'chat_hint_client' : 'chat_hint_master'))}</div>`;
+    msgs.forEach(m => {
+      const day = new Date(m.created_at).toLocaleDateString(lang, {day:'numeric', month:'long'});
+      if (day !== lastDay) { h += `<div class="ch-day">${esc(day)}</div>`; lastDay = day; }
+      h += msgHTML(m);
+    });
+    box.innerHTML = h;
+    if (stick || atEnd) box.scrollTop = box.scrollHeight;
+  }
+  async function openChatView(c, preset, admin){
+    openChat = c; chatAdmin = !!admin; msgs = [];
+    $('#chatTitle').textContent = chatTitle(c);
+    const m = listingOf(c);
+    $('#chatSub').textContent = chatAdmin ? (c.client_name || t('client')) : (myRole(c) === 'client' && m ? m.c : t('chat_safe'));
+    $('#chatOpenPro').hidden = !(m && myRole(c) === 'client' && !chatAdmin);
+    $('#chatBar').hidden = chatAdmin; $('#chatReport').hidden = chatAdmin;
+    $('#msgIn').value = preset || ''; autoGrow();
+    $('#msgs').innerHTML = '<div class="ch-hint">…</div>';
+    chatEl.classList.add('open'); chatEl.setAttribute('aria-hidden', 'false');
+    const {data, error} = await sb.from('messages').select('*').eq('chat_id', c.id).order('id', {ascending:true}).limit(500);
+    if (openChat !== c) return;
+    if (error) { toast(t('cab_err')); return; }
+    msgs = data || []; renderMsgs(true);
+    if (!chatAdmin) { sb.rpc('mark_read', {p_chat:c.id}).then(() => { c[myRole(c) + '_read_at'] = new Date().toISOString(); renderChats(); updBadge(); }); }
+    if (preset) setTimeout(() => $('#msgIn').focus(), 400);
+  }
+  function closeChat(){
+    if (!chatEl.classList.contains('open')) return;
+    chatEl.classList.remove('open'); chatEl.setAttribute('aria-hidden', 'true');
+    openChat = null; chatAdmin = false; $('#msgIn').blur();
+  }
+  function addMsg(m){
+    if (!openChat || m.chat_id !== openChat.id || msgs.some(x => x.id === m.id)) return false;
+    msgs.push(m); msgs.sort((a, b) => a.id - b.id); renderMsgs(user && m.sender === user.id);
+    return true;
+  }
+  async function sendMsg(photo){
+    if (!openChat || chatAdmin) return;
+    const body = photo ? '' : $('#msgIn').value.trim();
+    if (!body && !photo) return;
+    const btn = $('#msgSend'); busy(btn, true);
+    const {data, error} = await sb.from('messages').insert({chat_id:openChat.id, body, photo:photo || ''}).select().single();
+    busy(btn, false);
+    if (error) return toast(/banned/.test(error.message) ? t('banned') : /slow/.test(error.message) ? t('auth_wait') : t('cab_err'));
+    if (!photo) { $('#msgIn').value = ''; autoGrow(); }
+    addMsg(data);
+    openChat.last_at = data.created_at; openChat.last_text = body || '📷'; openChat.last_sender = user.id;
+    chats.sort((a, b) => new Date(b.last_at) - new Date(a.last_at)); renderChats();
+  }
+  function autoGrow(){ const el = $('#msgIn'); el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
+  $('#msgIn').addEventListener('input', autoGrow);
+  $('#msgIn').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey && !('ontouchstart' in window)) { e.preventDefault(); sendMsg(); } });
+  $('#msgSend').onclick = () => sendMsg();
+  $('#chatBack').onclick = closeChat;
+  $('#chatOpenPro').onclick = () => { const id = openChat && String(openChat.listing_id); closeChat(); if (id) openDetail(id); };
+  $('#msgPh').onchange = async e => { const f = e.target.files[0]; e.target.value = ''; if (!f || !openChat) return; const u = await upload(f, 1600); if (u) sendMsg(u); };
+  $('#chatReport').onclick = async () => {
+    if (!openChat) return;
+    const reason = await ask(t('report_h'), t('report_ph'), '', true);
+    if (reason === null) return;
+    const {error} = await sb.from('reports').insert({chat_id:openChat.id, reason});
+    toast(error ? t('cab_err') : t('report_ok'));
+  };
+
+  /* --- начать чат из карточки мастера --- */
+  async function startChat(id, preset){
+    id = String(id);
+    await initAuth(); if (!sb) return;
+    if (!user) { LS.set('mh_pending_chat', {id, preset:preset || ''}); openAuth(); return; }
+    const own = myList.some(x => String(x.id) === id);
+    if (own) return toast(t('own_listing'));
+    let c = chats.find(x => String(x.listing_id) === id && x.client === user.id);
+    if (!c) { const r = await sb.from('chats').select('*').eq('listing_id', id).eq('client', user.id).maybeSingle(); c = r.data; }
+    if (!c) {
+      let name = (user.user_metadata && user.user_metadata.name) || '';
+      if (!name) {
+        name = await ask(t('name_h'), t('name_ph'), '', false);
+        if (name === null) return;
+        name = name.slice(0, 60);
+        if (name) sb.auth.updateUser({data:{name}}).catch(() => {});
+      }
+      const r = await sb.from('chats').insert({listing_id:id, client_name:name}).select().single();
+      if (r.error) return toast(/own/.test(r.error.message) ? t('own_listing') : /banned/.test(r.error.message) ? t('banned') : /slow/.test(r.error.message) ? t('auth_wait') : t('cab_err'));
+      c = r.data; chats.unshift(c); renderChats();
+    }
+    if (openPro) closeDetail();
+    openChatView(c, preset);
+  }
+
+  /* --- маленькое окно с вопросом (имя, причина жалобы) --- */
+  let askRes = null;
+  function ask(title, ph, val, area){
+    return new Promise(res => {
+      if (askRes) askRes(null);
+      askRes = res;
+      $('#askH').textContent = title;
+      $('#askIn').hidden = !!area; $('#askArea').hidden = !area;
+      const el = area ? $('#askArea') : $('#askIn'); el.value = val || ''; el.placeholder = ph || '';
+      $('#askBg').classList.add('on'); setTimeout(() => el.focus(), 350);
+    });
+  }
+  function askDone(v){ $('#askBg').classList.remove('on'); const r = askRes; askRes = null; if (r) r(v); }
+  $('#askOk').onclick = () => { const v = ($('#askIn').hidden ? $('#askArea') : $('#askIn')).value.trim(); if (!v) return toast(t('fill_it')); askDone(v); };
+  $('#askIn').addEventListener('keydown', e => { if (e.key === 'Enter') $('#askOk').click(); });
+  $('#askBg').addEventListener('click', e => { if (e.target === e.currentTarget) askDone(null); });
+
+  /* --- WhatsApp и звонок: сначала предупреждение --- */
+  const chatOk = p => HAS_SB && !!p && !!p.self;
+  function setCta(p){
+    const ok = chatOk(p);
+    $('#chatBtn').hidden = !ok; $('#waRound').hidden = !ok; $('#waBtn').hidden = ok;
+  }
+  function safety(kind, service){
+    const p = openPro; if (!p) return;
+    const first = p.n.split(' ')[0];
+    const num = phoneDigits(kind === 'wa' ? (p.wa || p.phone) : (p.phone || p.wa));
+    if (!num) { toast(mode === 'demo' ? t('demo_phone') : kind === 'wa' ? t('no_wa') : t('no_phone')); return; }
+    const go = $('#safeGo');
+    if (kind === 'wa') {
+      go.href = `https://wa.me/${num}?text=` + encodeURIComponent(service ? t('wa_svc', {name:first, s:service}) : t('wa_gen', {name:first}));
+      go.target = '_blank'; go.rel = 'noopener'; go.textContent = t('safe_go_wa');
+    } else { go.href = 'tel:+' + num; go.removeAttribute('target'); go.textContent = t('safe_go_call', {n:'+' + num}); }
+    $('#safeH').textContent = kind === 'wa' ? t('safe_h_wa') : t('safe_h_call');
+    $('#safeChat').hidden = !chatOk(p); $('#safeChat').dataset.svc = service || '';
+    $('#safeBg').classList.add('on');
+  }
+  $('#safeGo').addEventListener('click', () => setTimeout(() => $('#safeBg').classList.remove('on'), 150));
+  $('#safeChat').onclick = () => { $('#safeBg').classList.remove('on'); const s = $('#safeChat').dataset.svc; if (openPro) startChat(openPro.id, s ? t('chat_svc', {s}) : ''); };
+
+  /* --- модерация: жалобы --- */
+  async function loadReports(){
+    const {data, error} = await sb.from('reports').select('*, chats(*)').eq('resolved', false).order('id', {ascending:false}).limit(100);
+    if (error) return toast(t('cab_err'));
+    reports = data || []; renderCab();
+  }
+  function reportsHTML(){
+    if (!reports) return `<div class="sec-t"><h2>${esc(t('reports_h'))}</h2><button data-rep="load">${esc(t('see_all'))}</button></div>`;
+    let h = `<div class="sec-t"><h2>${esc(t('reports_h'))}</h2></div>`;
+    if (!reports.length) return h + `<p class="cab-empty">${esc(t('reports_none'))}</p>`;
+    return h + reports.map(r => {
+      const c = r.chats || {}; const other = c.client === r.reporter ? c.master : c.client;
+      return `<div class="my"><div class="top"><div class="tx"><b>${esc(c.listing_title || '—')}</b><span>${esc(t('report_from'))}: ${esc(c.client === r.reporter ? (c.client_name || t('client')) : t('master'))} · ${esc(fmtTime(r.created_at))}</span><span style="white-space:normal;color:var(--ink)">${esc(r.reason)}</span></div></div>
+        <div class="acts" style="grid-template-columns:repeat(3,1fr)"><button class="press" data-rep="open" data-id="${r.id}">${esc(t('rep_open'))}</button><button class="press" data-rep="ban" data-id="${r.id}" data-u="${esc(other || '')}">${esc(t('rep_ban'))}</button><button class="press" data-rep="done" data-id="${r.id}">${esc(t('rep_done'))}</button></div></div>`;
+    }).join('');
+  }
+  async function repAction(a, id, u){
+    if (a === 'load') return loadReports();
+    const r = (reports || []).find(x => String(x.id) === String(id)); if (!r) return;
+    if (a === 'open') return r.chats && openChatView(r.chats, '', true);
+    if (a === 'ban') { if (!u || !confirm(t('ban_q'))) return; const {error} = await sb.from('banned').insert({user_id:u}); if (error && !/duplicate/.test(error.message)) return toast(t('cab_err')); toast(t('banned_ok')); }
+    const {error} = await sb.from('reports').update({resolved:true}).eq('id', r.id);
+    if (error) return toast(t('cab_err'));
+    loadReports();
+  }
+
+  /* --- вход/выход: подписка на новые сообщения --- */
+  function chatsOnLogin(){
+    loadChats();
+    if (rtChan) sb.removeChannel(rtChan);
+    rtChan = sb.channel('mh-' + user.id)
+      .on('postgres_changes', {event:'INSERT', schema:'public', table:'messages'}, p => {
+        const m = p.new;
+        if (addMsg(m) && user && m.sender !== user.id && document.visibilityState === 'visible') sb.rpc('mark_read', {p_chat:m.chat_id}).then(loadChatsSoon);
+        else loadChatsSoon();
+      })
+      .on('postgres_changes', {event:'*', schema:'public', table:'chats'}, loadChatsSoon)
+      .subscribe();
+    clearInterval(pollT);
+    pollT = setInterval(async () => {
+      if (!user || document.visibilityState !== 'visible') return;
+      loadChats();
+      if (openChat && !chatAdmin) {
+        const last = msgs.length ? msgs[msgs.length - 1].id : 0;
+        const {data} = await sb.from('messages').select('*').eq('chat_id', openChat.id).gt('id', last).order('id', {ascending:true});
+        if (data && data.length) { data.forEach(addMsg); sb.rpc('mark_read', {p_chat:openChat.id}); }
+      }
+    }, 20000);
+    const pc = LS.get('mh_pending_chat', null);
+    if (pc && pc.id) { LS.set('mh_pending_chat', null); setTimeout(() => startChat(pc.id, pc.preset), 300); return true; }
+    return false;
+  }
+  function chatsOnLogout(){
+    if (rtChan && sb) sb.removeChannel(rtChan); rtChan = null; clearInterval(pollT);
+    chats = []; chatsLoaded = false; reports = null; closeChat(); renderChats(); updBadge();
+  }
+  document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && user) loadChats(); });
+
+  renderChats();
   if (HAS_SB) {
     $('#formBox').hidden = true; $('#cabBox').hidden = false; renderCab();
     let hasSession = false; try { hasSession = !!localStorage.getItem('mh_auth'); } catch(e){}
@@ -1743,7 +2104,7 @@ window.MULTIHELP = {
   function setLang(l){
     if (!I18N[l] || l === lang) return;
     lang = l; LS.set('mh_lang', l); hi = 0; ci = 0; del = false;
-    applyStatic(); renderChips(); renderAll(); renderCab();
+    applyStatic(); renderChips(); renderAll(); renderCab(); renderChats();
     if (openPro) openDetail(openPro.id, true);
   }
   applyStatic(); renderChips(); renderAll(); load();
