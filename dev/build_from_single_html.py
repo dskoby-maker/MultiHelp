@@ -8,7 +8,9 @@ style = re.search(r'<style>(.*?)</style>', src, re.S).group(1)
 scripts = re.findall(r'<script>(.*?)</script>', src, re.S)
 cfg, main = scripts[0], scripts[1]
 body = re.search(r'<body>\s*(.*?)\s*<script>', src, re.S).group(1)
-cfg = cfg.replace('window.MULTIHELP = {', 'window.MULTIHELP = window.MULTIHELP || {')
+# настройки из страницы (например, из блока Тильды) важнее, но пустые/отсутствующие берутся из файла
+cfg = cfg.replace('window.MULTIHELP = {', 'window.MULTIHELP = (function(d, o){ o = o || {}; for (var k in d) if (o[k] === undefined || o[k] === null || o[k] === \'\') o[k] = d[k]; return o; })({', 1)
+i = cfg.rindex('};'); cfg = cfg[:i] + '}, window.MULTIHELP);' + cfg[i+2:]
 # root wrapper: cover the whole viewport inside Tilda / any host page
 style = style.replace('html,body{margin:0;height:100%}', 'html,body{margin:0;height:100%}\n  #mh-root{position:fixed;inset:0;z-index:9990;overflow:hidden;background:var(--bg);font-family:\'Jost\',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased;text-align:left;line-height:normal}\n  #mh-root *{box-sizing:border-box}')
 style = style.replace('*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}', '#mh-root *{-webkit-tap-highlight-color:transparent}')

@@ -7,7 +7,7 @@ if (window.__mhLoaded) return; window.__mhLoaded = true;
    НАСТРОЙКИ САЙТА — меняются только три строки ниже.
    Вставляйте ссылки между кавычками '...'
    ============================================================ */
-window.MULTIHELP = window.MULTIHELP || {
+window.MULTIHELP = (function(d, o){ o = o || {}; for (var k in d) if (o[k] === undefined || o[k] === null || o[k] === '') o[k] = d[k]; return o; })({
   // 1. Ссылка на опубликованную Google Таблицу в формате CSV
   //    (Файл → Поделиться → Опубликовать в интернете → CSV).
   //    Пока пусто — сайт показывает демо-мастеров.
@@ -29,7 +29,7 @@ window.MULTIHELP = window.MULTIHELP || {
   SUPABASE_KEY: 'sb_publishable_7Us6b2eO6RftaqTtVrUFGQ_YrUm-vDa',
   GOOGLE_LOGIN: false,               // true — показать кнопку «Войти через Google»
   SITE_URL: 'https://multihelp.es/'  // адрес для ссылок на объявления
-};
+}, window.MULTIHELP);
 
 var root = document.getElementById('mh-root');
 if (!root) { root = document.createElement('div'); root.id = 'mh-root'; document.body.appendChild(root); }
