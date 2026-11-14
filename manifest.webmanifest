@@ -2,6 +2,7 @@
   "name": "MultiHelp",
   "short_name": "MultiHelp",
   "description": "Мастера и специалисты рядом с вами в Испании",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

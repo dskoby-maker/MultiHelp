@@ -50,6 +50,8 @@ meta = re.search(r'(<meta name="description".*?)<link rel="apple-touch-icon"', s
 index = f"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">{meta}<link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><title>MultiHelp — специалисты рядом</title></head><body style="margin:0;background:#fff"><div id="mh-root"></div><script src="app.js?v={ver}"></script></body></html>
 """
 open(f'{out}/index.html','w',encoding='utf-8').write(index)
-manifest = {"name":"MultiHelp","short_name":"MultiHelp","description":"Мастера и специалисты рядом с вами в Испании","start_url":"./","scope":"./","display":"standalone","background_color":"#ffffff","theme_color":"#0b0b0b","lang":"es","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
+sw = open(os.path.join(ROOT, 'dev', 'src', 'sw.js'), encoding='utf-8').read().replace('__VER__', ver)
+open(f'{out}/sw.js', 'w', encoding='utf-8').write(sw)
+manifest = {"name":"MultiHelp","short_name":"MultiHelp","description":"Мастера и специалисты рядом с вами в Испании","id":"./","start_url":"./","scope":"./","display":"standalone","background_color":"#ffffff","theme_color":"#0b0b0b","lang":"es","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icon-512.png","sizes":"512x512","type":"image/png"},{"src":"icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}]}
 open(f'{out}/manifest.webmanifest','w').write(json.dumps(manifest, ensure_ascii=False, indent=2))
 print('ok', len(app))

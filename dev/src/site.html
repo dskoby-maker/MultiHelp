@@ -45,7 +45,11 @@ window.MULTIHELP = {
   SUPABASE_URL: 'https://htljzcwgtsbfgxegbwiu.supabase.co',
   SUPABASE_KEY: 'sb_publishable_7Us6b2eO6RftaqTtVrUFGQ_YrUm-vDa',
   GOOGLE_LOGIN: false,               // true — показать кнопку «Войти через Google»
-  SITE_URL: 'https://multihelp.es/'  // адрес для ссылок на объявления
+  SITE_URL: 'https://multihelp.es/', // адрес для ссылок на объявления
+
+  // 5. Приложение на телефоне (устанавливается с этого адреса) и ключ для уведомлений
+  APP_URL: 'https://dskoby-maker.github.io/MultiHelp/',
+  VAPID_PUBLIC: 'BHlQESU7ELl79PTYCLwnLRq--37Ss3USvO2bfNuf5cRLYOQU4Tb_B9GNkQlqMvyoTvDT6-ML7pBeSqD7TW0SPSg'
 };
 </script>
 
@@ -413,6 +417,12 @@ window.MULTIHELP = {
   .safe-list{margin:0 0 18px;padding:0 0 0 20px;font-size:14px;line-height:1.6}
   .cab-msgs{margin:10px 18px 0;width:calc(100% - 36px);display:flex;justify-content:space-between;align-items:center;min-height:52px;padding:0 18px;border:1px solid var(--hair);border-radius:16px;font-size:15px}
   .cab-msgs b{background:var(--ok);color:#fff;border-radius:999px;font-size:12px;padding:2px 8px;font-weight:500}
+  .push-card{position:relative;margin:12px 18px 4px;padding:16px 44px 16px 16px;border-radius:20px;background:var(--soft);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+  .push-card b{font-weight:500;font-size:15px}
+  .push-card span{font-size:13px;color:var(--muted);line-height:1.45}
+  .push-card .btn{min-height:42px;padding:0 18px;border-radius:12px;font-size:14px;margin-top:4px}
+  .push-card .x{position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:20px;color:var(--muted)}
+  .inst-ico{width:72px;height:72px;border-radius:18px;overflow:hidden;margin:6px 0 14px}
 </style>
 </head>
 <body>
@@ -518,6 +528,7 @@ window.MULTIHELP = {
         </div>
         <div id="cabBox" hidden></div>
         <div class="menu-list">
+          <a class="press" href="#" data-install><span data-i18n="install_app"></span> <span>↓</span></a>
           <a class="press" href="#" data-contact="help"><span data-i18n="contact_us"></span> <span>→</span></a>
           <a class="press" href="#" data-open-lang><span data-i18n="language"></span> <span class="lang-code" style="font-weight:500">ES</span></a>
         </div>
@@ -662,6 +673,16 @@ window.MULTIHELP = {
       </div>
     </div>
 
+    <div class="sheet-bg" id="instBg">
+      <div class="sheet" role="dialog" aria-labelledby="instH">
+        <div class="grab"></div>
+        <h3 id="instH" data-i18n="install_app"></h3>
+        <div class="inst-ico"><img src="data:image/png;base64,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" alt=""></div>
+        <p class="auth-p" id="instText" style="font-size:15px;color:var(--ink)"></p>
+        <button class="btn line full press" data-close-sheet data-i18n="ok"></button>
+      </div>
+    </div>
+
     <div class="toast" id="toast"></div>
   </div>
 </div>
@@ -696,6 +717,7 @@ window.MULTIHELP = {
       how:'Cómo funciona', s1b:'Rellena el formulario', s1s:'Fotos y vídeos de tus trabajos, servicios y precios, redes sociales, WhatsApp — unos 10 minutos.',
       s2b:'Revisamos tu perfil', s2s:'Normalmente en 1–2 días. Si hay que corregir algo, te escribimos.',
       s3b:'Recibe clientes', s3s:'Tu página aparecerá en el catálogo. Comparte el enlace en Instagram y WhatsApp.',
+      install_app:'Instalar la app', install_btn:'Instalar', install_done:'¡App instalada!', install_ios:'En Safari pulsa «Compartir» (el cuadrado con la flecha) → «Añadir a pantalla de inicio» → «Añadir». El icono de MultiHelp aparecerá en tu pantalla.', install_other:'Abre el menú del navegador (⋮) → «Instalar aplicación» o «Añadir a pantalla de inicio».', push_h:'Avisos de mensajes', push_p:'Actívalos para enterarte al momento cuando te escriban.', push_btn:'Activar', push_on:'Avisos activados', push_denied:'Los avisos están bloqueados en los ajustes del móvil', push_app_p:'Para recibir avisos de mensajes, instala la app de MultiHelp.', push_ios_p:'En iPhone los avisos funcionan cuando MultiHelp está en la pantalla de inicio.',
       f_contacts:'Cómo pueden contactarte', f_contacts_hint:'Todo es opcional. Lo que rellenes aparecerá como botón en tu anuncio. Si no rellenas nada, los clientes te escribirán solo por el chat de MultiHelp.', f_tg:'Telegram', f_tg_ph:'@usuario o t.me/usuario', safe_h_tg:'Vas a abrir Telegram', safe_go_tg:'Abrir Telegram igualmente', svc_note_chat:'Pulsa un servicio y se abrirá el chat con un mensaje listo', chats:'Mensajes', chat_btn:'Escribir en el chat', chat_soon:'El chat estará disponible pronto.', chats_login:'Entra para escribir a los profesionales y ver tus conversaciones.',
       chats_empty:'Aquí aparecerán tus conversaciones con los profesionales.', chat_new:'Conversación nueva', you:'Tú', client:'Cliente',
       master:'Profesional', chat_removed:'Anuncio eliminado', chat_safe:'Chat protegido por MultiHelp', chat_ph:'Mensaje…',
@@ -769,6 +791,7 @@ window.MULTIHELP = {
       how:'Как это работает', s1b:'Заполните анкету', s1s:'Фото работ, видео, услуги и цены, соцсети, WhatsApp — около 10 минут.',
       s2b:'Мы проверим профиль', s2s:'Обычно за 1–2 дня. Если что-то нужно поправить — напишем.',
       s3b:'Получайте клиентов', s3s:'Ваша страница появится в каталоге. Делитесь ссылкой на неё в Instagram и WhatsApp.',
+      install_app:'Установить приложение', install_btn:'Установить', install_done:'Приложение установлено!', install_ios:'В Safari нажмите «Поделиться» (квадрат со стрелкой) → «На экран „Домой“» → «Добавить». На экране появится иконка MultiHelp.', install_other:'Откройте меню браузера (⋮) → «Установить приложение» или «Добавить на главный экран».', push_h:'Уведомления о сообщениях', push_p:'Включите, чтобы сразу узнавать, когда вам пишут.', push_btn:'Включить', push_on:'Уведомления включены', push_denied:'Уведомления запрещены в настройках телефона', push_app_p:'Чтобы получать уведомления о сообщениях, установите приложение MultiHelp.', push_ios_p:'На iPhone уведомления работают, когда MultiHelp добавлен на экран «Домой».',
       f_contacts:'Как с вами связаться', f_contacts_hint:'Всё необязательно. Что заполните — появится кнопкой в объявлении. Если ничего не указать, клиенты будут писать вам только в чат MultiHelp.', f_tg:'Telegram', f_tg_ph:'@имя или t.me/имя', safe_h_tg:'Вы переходите в Telegram', safe_go_tg:'Всё равно открыть Telegram', svc_note_chat:'Нажмите на услугу — откроется чат с готовым сообщением', chats:'Сообщения', chat_btn:'Написать в чат', chat_soon:'Чат скоро появится.', chats_login:'Войдите, чтобы писать мастерам и видеть свои переписки.',
       chats_empty:'Здесь появятся ваши переписки с мастерами.', chat_new:'Новый чат', you:'Вы', client:'Клиент',
       master:'Мастер', chat_removed:'Объявление удалено', chat_safe:'Переписка под защитой MultiHelp', chat_ph:'Сообщение…',
@@ -842,6 +865,7 @@ window.MULTIHELP = {
       how:'How it works', s1b:'Fill in the form', s1s:'Photos and videos of your work, services and prices, social media, WhatsApp — about 10 minutes.',
       s2b:'We review your profile', s2s:'Usually within 1–2 days. If anything needs fixing, we’ll message you.',
       s3b:'Get clients', s3s:'Your page will appear in the catalogue. Share the link on Instagram and WhatsApp.',
+      install_app:'Install the app', install_btn:'Install', install_done:'App installed!', install_ios:'In Safari tap “Share” (the square with an arrow) → “Add to Home Screen” → “Add”. The MultiHelp icon will appear on your screen.', install_other:'Open the browser menu (⋮) → “Install app” or “Add to Home screen”.', push_h:'Message notifications', push_p:'Turn them on to know right away when someone writes to you.', push_btn:'Turn on', push_on:'Notifications on', push_denied:'Notifications are blocked in your phone settings', push_app_p:'To get message notifications, install the MultiHelp app.', push_ios_p:'On iPhone, notifications work when MultiHelp is on your Home Screen.',
       f_contacts:'How clients can reach you', f_contacts_hint:'All optional. Whatever you fill in appears as a button on your listing. If you leave it empty, clients will message you only in MultiHelp chat.', f_tg:'Telegram', f_tg_ph:'@username or t.me/username', safe_h_tg:'You’re opening Telegram', safe_go_tg:'Open Telegram anyway', svc_note_chat:'Tap a service to open the chat with a ready message', chats:'Messages', chat_btn:'Message in chat', chat_soon:'Chat is coming soon.', chats_login:'Sign in to message professionals and see your conversations.',
       chats_empty:'Your conversations with professionals will appear here.', chat_new:'New chat', you:'You', client:'Client',
       master:'Professional', chat_removed:'Listing removed', chat_safe:'Chat protected by MultiHelp', chat_ph:'Message…',
@@ -1456,6 +1480,8 @@ window.MULTIHELP = {
     if (el.closest('#tgRound') && openPro) return safety('tg');
     if (el.closest('#chatBtn') && openPro) return startChat(openPro.id);
     const chr = el.closest('[data-chat]'); if (chr) { const c = chats.find(x => x.id === chr.dataset.chat); if (c) openChatView(c); return; }
+    const pu = el.closest('[data-push]'); if (pu) { e.preventDefault(); return pushAction(pu.dataset.push); }
+    if (el.closest('[data-install]')) { e.preventDefault(); return openInstall(); }
     const rp = el.closest('[data-rep]'); if (rp) { e.preventDefault(); return repAction(rp.dataset.rep, rp.dataset.id, rp.dataset.u); }
     if (el.closest('#share') && openPro) {
       const url = location.origin + location.pathname + '?m=' + encodeURIComponent(openPro.id);
@@ -1555,7 +1581,7 @@ window.MULTIHELP = {
     renderCab(); renderChats();
     if (!user) { chatsOnLogout(); return; }
     $('#authBg').classList.remove('on');
-    const pend = chatsOnLogin();
+    const pend = chatsOnLogin(); checkPush();
     if (LS.get('mh_after_login', null)) { LS.set('mh_after_login', null); if (!pend && current !== 'chats') go('me'); }
     try { const r = await sb.rpc('is_admin'); isAdmin = r.data === true; } catch(e){}
     await loadMine();
@@ -1610,6 +1636,7 @@ window.MULTIHELP = {
       return;
     }
     let h = `<div class="cab-head"><span class="caps" style="color:var(--block-muted)">${esc(t('cab'))}</span><span class="em">${esc(user.email || '')}</span><button data-cab="logout">${esc(t('logout'))}</button></div>
+      <div class="push-slot">${pushCardHTML()}</div>
       <button class="btn dark press cab-new" data-cab="new">${esc(t('new_listing'))}</button>
       ${chats.some(c => c.master === user.id) ? `<button class="cab-msgs press" data-tab-go="chats"><span>${esc(t('msgs_btn'))}</span>${chats.filter(c => c.master === user.id && isUnread(c)).length ? `<b>${chats.filter(c => c.master === user.id && isUnread(c)).length}</b>` : '<span>→</span>'}</button>` : ''}
       <div class="sec-t"><h2>${esc(t('my_listings'))}</h2></div>`;
@@ -1638,7 +1665,7 @@ window.MULTIHELP = {
   async function cabAction(a, id, adm){
     if (a === 'login') return openAuth();
     await initAuth(); if (!sb) return;
-    if (a === 'logout') { await sb.auth.signOut(); return; }
+    if (a === 'logout') { await removePush(); await sb.auth.signOut(); return; }
     if (a === 'new') { if (myList.length >= MAX_LISTINGS) return toast(t('ed_limit')); return openEd(null); }
     if (a === 'admin') return loadAll();
     const x = (adm ? (allList || []) : myList).find(i => String(i.id) === String(id)); if (!x) return;
@@ -1846,6 +1873,7 @@ window.MULTIHELP = {
     if (!error) { chats = data || []; chatsLoaded = true; }
     renderChats(); updBadge();
     if (current === 'me') renderCab();
+    if (openChatId) { const c = chats.find(x => x.id === openChatId); openChatId = null; if (c) { go('chats'); openChatView(c); } }
   }
   const loadChatsSoon = () => { clearTimeout(chatsT); chatsT = setTimeout(loadChats, 400); };
   function renderChats(){
@@ -1856,10 +1884,10 @@ window.MULTIHELP = {
       return;
     }
     if (!chats.length) {
-      box.innerHTML = chatsLoaded ? `<div class="empty"><b>${esc(t('chats'))}</b><span>${esc(t('chats_empty'))}</span><button class="btn dark press" data-tab-go="home" style="margin-top:8px">${esc(t('see_pros'))}</button></div>` : '<p class="cab-empty" style="padding-top:20px">…</p>';
+      box.innerHTML = chatsLoaded ? `<div class="push-slot">${pushCardHTML()}</div><div class="empty"><b>${esc(t('chats'))}</b><span>${esc(t('chats_empty'))}</span><button class="btn dark press" data-tab-go="home" style="margin-top:8px">${esc(t('see_pros'))}</button></div>` : '<p class="cab-empty" style="padding-top:20px">…</p>';
       return;
     }
-    box.innerHTML = chats.map(c => {
+    box.innerHTML = `<div class="push-slot">${pushCardHTML()}</div>` + chats.map(c => {
       const m = listingOf(c), un = isUnread(c);
       const pic = myRole(c) === 'client' && m && m.ava ? `<img src="${esc(m.ava)}" alt="">` : esc(initials(myRole(c) === 'client' ? (m ? m.n : String(c.listing_title).split(' · ')[0]) : (c.client_name || '?')));
       const mine = c.last_sender === user.id;
@@ -2076,6 +2104,90 @@ window.MULTIHELP = {
     chats = []; chatsLoaded = false; reports = null; closeChat(); renderChats(); updBadge();
   }
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && user) loadChats(); });
+
+  /* ---------- приложение на телефоне: установка и уведомления ---------- */
+  const APP_URL = String(CFG.APP_URL || '');
+  const IS_APP = (() => { try { const base = APP_URL.replace(/index\.html$/, ''); return !!base && location.origin + location.pathname.replace(/index\.html$/, '') === base; } catch(e){ return false; } })();
+  const STANDALONE = (() => { try { return matchMedia('(display-mode: standalone)').matches || navigator.standalone === true; } catch(e){ return false; } })();
+  const IOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const PUSH_OK = IS_APP && 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window && !!CFG.VAPID_PUBLIC;
+  let installEvt = null, pushOn = false, openChatId = (() => { try { return new URLSearchParams(location.search).get('chat'); } catch(e){ return null; } })();
+
+  if (IS_APP && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+    navigator.serviceWorker.addEventListener('message', e => {
+      if (e.data && e.data.type === 'open') { try { const id = new URL(e.data.url).searchParams.get('chat'); if (id) openChatById(id); } catch(err){} }
+    });
+  }
+  addEventListener('beforeinstallprompt', e => { e.preventDefault(); installEvt = e; renderInstall(); });
+  addEventListener('appinstalled', () => { installEvt = null; toast(t('install_done')); renderInstall(); });
+
+  function renderInstall(){ $$('[data-install]').forEach(b => { b.hidden = STANDALONE; }); }
+  function openInstall(){
+    if (!IS_APP && APP_URL) { location.href = APP_URL + '?install=1'; return; }
+    if (installEvt) { installEvt.prompt(); installEvt.userChoice.finally(() => { installEvt = null; }); return; }
+    $('#instText').textContent = IOS ? t('install_ios') : t('install_other');
+    $('#instBg').classList.add('on');
+  }
+
+  const b64u = s => { const p = '='.repeat((4 - s.length % 4) % 4); const r = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')); return Uint8Array.from(r, c => c.charCodeAt(0)); };
+  async function savePush(sub){ const j = sub.toJSON(); await sb.rpc('save_push', {p_endpoint:j.endpoint, p_p256dh:j.keys.p256dh, p_auth:j.keys.auth}); }
+  async function checkPush(){
+    pushOn = false;
+    if (!PUSH_OK || !user || Notification.permission !== 'granted') return renderPushCards();
+    try {
+      const reg = await navigator.serviceWorker.ready;
+      const sub = await reg.pushManager.getSubscription();
+      if (sub) { await savePush(sub); pushOn = true; }
+    } catch(e){}
+    renderPushCards();
+  }
+  async function enablePush(){
+    if (!PUSH_OK) return openInstall();
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm !== 'granted') { toast(t('push_denied')); return renderPushCards(); }
+      const reg = await navigator.serviceWorker.ready;
+      const sub = (await reg.pushManager.getSubscription()) || await reg.pushManager.subscribe({userVisibleOnly:true, applicationServerKey:b64u(CFG.VAPID_PUBLIC)});
+      await savePush(sub); pushOn = true; toast(t('push_on'));
+    } catch(e) { toast(t('cab_err')); }
+    renderPushCards();
+  }
+  async function removePush(){
+    if (!PUSH_OK || !sb || !user) return;
+    try { const reg = await navigator.serviceWorker.ready; const sub = await reg.pushManager.getSubscription(); if (sub) { await sb.rpc('delete_push', {p_endpoint:sub.endpoint}); await sub.unsubscribe(); } } catch(e){}
+    pushOn = false;
+  }
+  function pushCardHTML(){
+    if (!HAS_SB || !user || pushOn) return '';
+    const hid = LS.get('mh_push_hide', 0); if (hid && Date.now() - hid < 3 * 864e5) return '';
+    let p, btn, act;
+    if (PUSH_OK) {
+      if (Notification.permission === 'denied') return '';
+      p = t('push_p'); btn = t('push_btn'); act = 'on';
+    } else if (IS_APP && IOS && !STANDALONE) { p = t('push_ios_p'); btn = t('install_btn'); act = 'install'; }
+    else if (!IS_APP && APP_URL) { p = t('push_app_p'); btn = t('install_btn'); act = 'install'; }
+    else return '';
+    return `<div class="push-card"><button class="x" data-push="hide" aria-label="×">×</button><b>🔔 ${esc(t('push_h'))}</b><span>${esc(p)}</span><button class="btn dark press" data-push="${act}">${esc(btn)}</button></div>`;
+  }
+  function renderPushCards(){ $$('.push-slot').forEach(el => { el.innerHTML = pushCardHTML(); }); }
+  function pushAction(a){
+    if (a === 'on') return enablePush();
+    if (a === 'install') return openInstall();
+    if (a === 'hide') { LS.set('mh_push_hide', Date.now()); renderPushCards(); }
+  }
+  function openChatById(id){
+    const c = chats.find(x => x.id === id);
+    if (c) { openChatId = null; go('chats'); openChatView(c); return; }
+    openChatId = id; if (user) loadChats(); else { go('chats'); }
+  }
+  function stripChatParam(){
+    try { const u = new URL(location.href); if (u.searchParams.has('chat') || u.searchParams.has('install')) { u.searchParams.delete('chat'); u.searchParams.delete('install'); history.replaceState(null, '', u.pathname + u.search + u.hash); } } catch(e){}
+  }
+  if (IS_APP && /[?&]install=1/.test(location.search) && !STANDALONE) setTimeout(openInstall, 1200);
+  if (openChatId) { stripChatParam(); setTimeout(() => go('chats'), 50); if (HAS_SB) initAuth(); }
+  $('#instBg').addEventListener('click', e => { if (e.target === e.currentTarget) e.currentTarget.classList.remove('on'); });
+  renderInstall();
 
   renderChats();
   if (HAS_SB) {
