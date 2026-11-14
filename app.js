@@ -25,8 +25,8 @@ window.MULTIHELP = window.MULTIHELP || {
 
   // 4. Личные кабинеты мастеров (Supabase → Project Settings → API).
   //    Пока пусто — вместо кабинета кнопка ведёт на анкету.
-  SUPABASE_URL: '',
-  SUPABASE_KEY: '',
+  SUPABASE_URL: 'https://htljzcwgtsbfgxegbwiu.supabase.co',
+  SUPABASE_KEY: 'sb_publishable_7Us6b2eO6RftaqTtVrUFGQ_YrUm-vDa',
   GOOGLE_LOGIN: false,               // true — показать кнопку «Войти через Google»
   SITE_URL: 'https://multihelp.es/'  // адрес для ссылок на объявления
 };
