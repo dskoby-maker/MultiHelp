@@ -423,6 +423,75 @@ window.MULTIHELP = {
   .push-card .btn{min-height:42px;padding:0 18px;border-radius:12px;font-size:14px;margin-top:4px}
   .push-card .x{position:absolute;top:8px;right:8px;width:32px;height:32px;font-size:20px;color:var(--muted)}
   .inst-ico{width:72px;height:72px;border-radius:18px;overflow:hidden;margin:6px 0 14px}
+
+  /* ---------- версия для компьютера (широкий экран); телефон не меняется ---------- */
+  .tb-brand{display:none}
+  @media (min-width:1024px){
+    body,#mh-root{background:var(--bg)}
+    .stage{gap:0;display:block}
+    .side{display:none!important}
+    .app{width:100%!important;height:100dvh!important;border-radius:0!important;box-shadow:none!important}
+    /* меню сверху */
+    .tabbar{top:0;bottom:auto;height:68px;padding:0 max(32px,calc((100% - 1240px) / 2));display:flex;align-items:center;justify-content:flex-end;gap:4px;border-top:0;border-bottom:1px solid var(--hair)}
+    .tb-brand{display:flex;align-items:center;margin-right:auto;font-weight:500;font-size:20px;letter-spacing:-.01em;cursor:pointer}
+    .tb-brand i{font-style:normal;color:var(--muted);font-weight:400}
+    .tab{flex-direction:row;gap:8px;height:44px;padding:0 16px;border-radius:999px;font-size:14px;letter-spacing:0;color:var(--muted)}
+    .tab svg{width:19px;height:19px}
+    .tab:hover{background:var(--soft);color:var(--ink)}
+    .tab.on{background:var(--ink);color:var(--bg)}
+    .tab.on svg{transform:none}
+    .tab .cnt{position:static;margin-left:2px}
+    .tab.on .cnt{background:var(--bg);color:var(--ink)}
+    .ind{display:none}
+    .screens{inset:68px 0 0 0}
+    .screen{padding:0 max(32px,calc((100% - 1240px) / 2)) 40px}
+    #s-me,#s-chats,#s-fav{padding-left:max(32px,calc((100% - 760px) / 2));padding-right:max(32px,calc((100% - 760px) / 2))}
+    .topbar{padding-left:0;padding-right:0}
+    #s-home .topbar .brand{visibility:hidden}
+    .screen .topbar .brand{font-size:26px;font-weight:400}
+    /* главная */
+    .hello{padding:20px 0 0}
+    .hello h1{font-size:88px}
+    .fake-search{margin:26px 0 0;width:100%;max-width:640px;min-height:60px;font-size:16px}
+    .quick,.chips{padding-left:0;padding-right:0}
+    .sec-t{padding:40px 0 16px}
+    .sec-t h2{font-size:22px}
+    .hscroll{padding:0;overflow:visible}
+    #homeCats{flex-wrap:wrap;gap:14px}
+    .cat{width:150px}
+    .cat .im{height:180px}
+    .cat:hover .im img{filter:none}
+    #nearby{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+    #nearby .card,#nearby .skel-card{width:auto}
+    .card .im{height:320px}
+    .card:hover .im img{transform:scale(1.04)}
+    .promo{margin:44px 0 0;width:100%;padding:32px}
+    .promo b{font-size:40px}
+    .list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;padding:0 0 30px}
+    #s-fav .list{grid-template-columns:1fr}
+    .row{border-radius:12px}
+    .row:hover{background:var(--soft)}
+    .search-bar{margin:0;min-height:58px}
+    /* кабинет, чаты */
+    .hero-pro,.cab-head{margin-left:0;margin-right:0}
+    .steps,.menu-list{padding-left:0;padding-right:0}
+    .cab-new,.cab-msgs{margin-left:0;margin-right:0;width:100%}
+    .my,.cab-empty,.push-card{margin-left:0;margin-right:0}
+    .ch-row{padding-left:12px;padding-right:12px;border-radius:12px}
+    .ch-row:hover{background:var(--soft)}
+    /* карточка мастера, чат, редактор — панель справа */
+    .detail{left:auto;right:0;width:560px;box-shadow:-24px 0 60px rgba(0,0,0,.14)}
+    .ed{width:620px}
+    .chat{width:520px}
+    .gallery{height:520px}
+    .d-cta{padding-bottom:16px}
+    /* окна — по центру */
+    .sheet{left:50%;right:auto;top:50%;bottom:auto;width:460px;max-height:86%;border-radius:26px;padding:26px 28px 28px;opacity:0;transform:translate(-50%,-46%);transition:transform .35s var(--ease),opacity .25s}
+    .sheet-bg.on .sheet{transform:translate(-50%,-50%);opacity:1}
+    .sheet .grab{display:none}
+    .toast{bottom:28px}
+    .btn,.chip,.city,.opt,.press{cursor:pointer}
+  }
 </style>
 </head>
 <body>
@@ -574,6 +643,7 @@ window.MULTIHELP = {
     <!-- TABBAR -->
     <nav class="tabbar" id="tabbar" data-i18n-aria="nav" aria-label="Навигация">
       <span class="ind" id="ind"></span>
+      <span class="tb-brand" data-tab-go="home">MultiHelp<i>.es</i></span>
       <button class="tab on" data-tab-go="home"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg><span data-i18n="home">Главная</span></button>
       <button class="tab" data-tab-go="search"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span data-i18n="search">Поиск</span></button>
       <button class="tab" data-tab-go="fav"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 017-2.6A4 4 0 0119 10c0 5.6-7 10-7 10z"/></svg><span data-i18n="favs">Избранное</span><span class="cnt" id="favCnt">0</span></button>

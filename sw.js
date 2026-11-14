@@ -1,5 +1,5 @@
 /* MultiHelp — помощник приложения на телефоне: работа без интернета и уведомления о сообщениях. */
-const CACHE = 'mh-20261114g';
+const CACHE = 'mh-20261114h';
 const SHELL = ['./', './index.html', './app.js', './manifest.webmanifest', './icon-192.png', './favicon.png'];
 
 self.addEventListener('install', e => {
