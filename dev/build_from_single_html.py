@@ -39,7 +39,10 @@ def make(size, pad=0.0, path=None):
     f = ImageFont.truetype('/usr/share/fonts/truetype/dejavu/DejaVuSans-ExtraLight.ttf', int(size*0.66*(1-pad)))
     b = d.textbbox((0,0),'M',font=f); w=b[2]-b[0]; h=b[3]-b[1]
     d.text(((size-w)/2-b[0],(size-h)/2-b[1]),'M',fill='white',font=f); im.save(path, optimize=True)
-make(192, path=f'{out}/icon-192.png'); make(512, path=f'{out}/icon-512.png'); make(512, pad=0.25, path=f'{out}/icon-maskable-512.png'); make(180, path=f'{out}/apple-touch-icon.png'); make(64, path=f'{out}/favicon.png')
+if os.path.exists('/usr/share/fonts/truetype/dejavu/DejaVuSans-ExtraLight.ttf'):
+    make(192, path=f'{out}/icon-192.png'); make(512, path=f'{out}/icon-512.png'); make(512, pad=0.25, path=f'{out}/icon-maskable-512.png'); make(180, path=f'{out}/apple-touch-icon.png'); make(64, path=f'{out}/favicon.png')
+else:
+    print('шрифт для иконок не найден — иконки оставлены как есть')
 ver = sys.argv[1] if len(sys.argv)>1 else 'dev'
 meta = re.search(r'(<meta name="description".*?)<link rel="apple-touch-icon"', src, re.S).group(1)
 index = f"""<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">{meta}<link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" href="favicon.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><title>MultiHelp — специалисты рядом</title></head><body style="margin:0;background:#fff"><div id="mh-root"></div><script src="app.js?v={ver}"></script></body></html>
