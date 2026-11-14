@@ -40,9 +40,13 @@ function syncTilda() {
     if (col('id') < 0) throw new Error('В «Анкеты» нет столбца id');
 
     const lastRow = target.getLastRow();
-    const known = new Set(lastRow > 1
-      ? target.getRange(2, col('id') + 1, lastRow - 1, 1).getValues().map(r => String(r[0])).filter(String)
-      : []);
+    const ids = lastRow > 1 ? target.getRange(2, col('id') + 1, lastRow - 1, 1).getValues().map(r => String(r[0]).trim()) : [];
+    const names = lastRow > 1 && col('name') >= 0 ? target.getRange(2, col('name') + 1, lastRow - 1, 1).getValues().map(r => String(r[0]).trim()) : [];
+    const known = new Set(ids.filter(String));
+    // первая свободная строка: после последней строки с id или именем
+    // (пустые строки с заранее поставленными галочками считаются свободными)
+    let nextRow = 2;
+    for (let i = ids.length - 1; i >= 0; i--) if (ids[i] || names[i]) { nextRow = i + 3; break; }
     // анкеты, которые уже переносили раньше: если вы удалили строку — она не вернётся
     const props = PropertiesService.getScriptProperties();
     const saved = props.getProperties();
@@ -86,7 +90,10 @@ function syncTilda() {
               });
               out[col('id')] = id;
               if (col('submitted') >= 0) out[col('submitted')] = timeCol >= 0 && r[timeCol] ? r[timeCol] : new Date();
-              target.appendRow(out);
+              ['show', 'available_today'].forEach(k => { if (col(k) >= 0) out[col(k)] = false; });
+              if (nextRow > target.getMaxRows()) target.insertRowsAfter(target.getMaxRows(), 1);
+              target.getRange(nextRow, 1, 1, out.length).setValues([out]);
+              nextRow++;
               // запоминаем только ПОСЛЕ успешной записи строки: если запись сорвалась,
               // анкета не потеряется и перенесётся при следующем запуске
               props.setProperty('seen_' + id, '1');
